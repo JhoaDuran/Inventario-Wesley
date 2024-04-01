@@ -23,11 +23,12 @@
     	die(json_encode($permiso));
     }
 
-	if(isset($_POST["clase"]) && $permiso['Registrar'] == 1) {
+	if(isset($_POST["clase"]) ) {
+
 		$objModel->getAgregarClase($_POST["clase"]);
 	}
 
-	if(isset($_POST["mostrar"]) && isset($_POST['bitacora']) && $permiso['Consultar'] == 1) {
+	if(isset($_POST["mostrar"]) && isset($_POST['bitacora'])) {
 		$objModel->mostrarClase();
 	}
 

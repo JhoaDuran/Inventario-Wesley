@@ -43,12 +43,11 @@
       $this->con = NULL;  
     }
 
-    protected function binnacle($modulo, $usuario, $descripcion){
+    protected function binnacle($modulo = "", $usuario, $descripcion){
       try {
-        $new = $this->con->prepare("INSERT INTO bitacora(id, modulo, usuario, descripcion, fecha, status) VALUES (DEFAULT,?,?,?,DEFAULT,1)");
-        $new->bindValue(1, $modulo);
-        $new->bindValue(2, $usuario);
-        $new->bindValue(3, $descripcion);
+        $new = $this->con->prepare("INSERT INTO bitacora(id, usuario, descripcion, fecha, status) VALUES (DEFAULT,?,?,DEFAULT,1)");
+        $new->bindValue(1, $usuario);
+        $new->bindValue(2, $descripcion);
         $new->execute();
       } catch (\PDOException $e) {
         print "¡Error!: " . $e->getMessage() . "<br/>";
@@ -58,6 +57,17 @@
 
     protected function uniqueID(){
       return bin2hex(random_bytes(5));
+    }
+
+    protected function uniqueNumericID(){
+    $randomNumber = '';
+    $length = 8; // Longitud del ID numérico deseado
+
+    for ($i = 0; $i < $length; $i++) {
+        $randomNumber .= mt_rand(0, 9); // Genera un dígito aleatorio entre 0 y 9
+      }
+
+      return $randomNumber;
     }
 
     public function getPermisosRol($rol){
